@@ -71,6 +71,16 @@
     _snapshotController.folderName = folderName;
 }
 
+- (BOOL)flattenSnapshotFilename
+{
+    return _snapshotController.flattenSnapshotFilename;
+}
+
+- (void)setFlattenSnapshotFilename:(BOOL)enabled
+{
+    _snapshotController.flattenSnapshotFilename = enabled;
+}
+
 #pragma mark - Public API
 
 - (NSString *)snapshotVerifyViewOrLayer:(id)viewOrLayer
