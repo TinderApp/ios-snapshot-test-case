@@ -164,6 +164,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite, nonatomic, copy, nullable) NSString *folderName;
 
 /**
+ Flattens the resulting filename with the following pattern TestCase_TestName_filename.png
+
+ @attention This property *must* be called *AFTER* [super setUp].
+ */
+@property (readwrite, nonatomic, assign) BOOL flattenSnapshotFilename;
+
+/**
  When YES, renders a snapshot of the complete view hierarchy as visible onscreen.
  There are several things that do not work if renderInContext: is used.
  - UIVisualEffect #70

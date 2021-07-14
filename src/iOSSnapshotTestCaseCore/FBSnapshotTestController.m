@@ -291,9 +291,14 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
     NSString *fileName = [self _fileNameForSelector:selector
                                          identifier:identifier
                                        fileNameType:FBTestSnapshotFileNameTypeReference];
-    NSString *filePath = [_referenceImagesDirectory stringByAppendingPathComponent:self.folderName];
-    filePath = [filePath stringByAppendingPathComponent:fileName];
-    return filePath;
+    if (self.flattenSnapshotFilename) {
+        NSString *formattedFilename = [NSString stringWithFormat:@"%@_%@", self.folderName, fileName];
+        return [_referenceImagesDirectory stringByAppendingPathComponent:formattedFilename];
+    } else {
+        NSString *filePath = [_referenceImagesDirectory stringByAppendingPathComponent:self.folderName];
+        filePath = [filePath stringByAppendingPathComponent:fileName];
+        return filePath;
+    }
 }
 
 - (NSString *)_failedFilePathForSelector:(SEL)selector
@@ -304,9 +309,14 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
                                          identifier:identifier
                                        fileNameType:fileNameType];
 
-    NSString *filePath = [_imageDiffDirectory stringByAppendingPathComponent:self.folderName];
-    filePath = [filePath stringByAppendingPathComponent:fileName];
-    return filePath;
+    if (self.flattenSnapshotFilename) {
+        NSString *formattedFilename = [NSString stringWithFormat:@"%@_%@", self.folderName, fileName];
+        return [_imageDiffDirectory stringByAppendingPathComponent:formattedFilename];
+    } else {
+        NSString *filePath = [_imageDiffDirectory stringByAppendingPathComponent:self.folderName];
+        filePath = [filePath stringByAppendingPathComponent:fileName];
+        return filePath;
+    }
 }
 
 - (BOOL)_performPixelComparisonWithViewOrLayer:(id)viewOrLayer

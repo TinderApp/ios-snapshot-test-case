@@ -96,6 +96,11 @@ extern NSString *const FBDiffedImageKey;
 @property (readwrite, nonatomic, copy) NSString *folderName;
 
 /**
+ Flattens the resulting filename with the following pattern TestCase_TestName_filename.png
+ */
+@property (readwrite, nonatomic, assign) BOOL flattenSnapshotFilename;
+
+/**
  @param testClass The subclass of FBSnapshotTestCase that is using this controller.
  @returns An instance of FBSnapshotTestController.
  */
