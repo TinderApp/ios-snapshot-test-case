@@ -252,7 +252,7 @@
     if (dir && dir.length > 0) {
         return dir;
     }
-    return [[NSBundle bundleForClass:self.class].resourcePath stringByAppendingPathComponent:@"ReferenceImages"];
+    return [NSBundle bundleForClass:self.class].resourcePath;
 }
 
 - (NSString *)getImageDiffDirectoryWithDefault:(NSString *)dir

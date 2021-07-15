@@ -209,16 +209,18 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
                                                     identifier:identifier
                                                   fileNameType:FBTestSnapshotFileNameTypeFailedReference];
 
-    NSError *creationError = nil;
-    BOOL didCreateDir = [_fileManager createDirectoryAtPath:[referencePath stringByDeletingLastPathComponent]
-                                withIntermediateDirectories:YES
-                                                 attributes:nil
-                                                      error:&creationError];
-    if (!didCreateDir) {
-        if (errorPtr != NULL) {
-            *errorPtr = creationError;
+    if (!self.flattenSnapshotFilename) {
+        NSError *creationError = nil;
+        BOOL didCreateDir = [_fileManager createDirectoryAtPath:[referencePath stringByDeletingLastPathComponent]
+                                    withIntermediateDirectories:YES
+                                                     attributes:nil
+                                                          error:&creationError];
+        if (!didCreateDir) {
+            if (errorPtr != NULL) {
+                *errorPtr = creationError;
+            }
+            return NO;
         }
-        return NO;
     }
 
     if (![referencePNGData writeToFile:referencePath options:NSDataWritingAtomic error:errorPtr]) {
@@ -292,7 +294,8 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
                                          identifier:identifier
                                        fileNameType:FBTestSnapshotFileNameTypeReference];
     if (self.flattenSnapshotFilename) {
-        NSString *formattedFilename = [NSString stringWithFormat:@"%@_%@", self.folderName, fileName];
+        NSString *formattedFolderName = [self.folderName stringByReplacingOccurrencesOfString:@"." withString:@"_"];
+        NSString *formattedFilename = [NSString stringWithFormat:@"%@_%@", formattedFolderName, fileName];
         return [_referenceImagesDirectory stringByAppendingPathComponent:formattedFilename];
     } else {
         NSString *filePath = [_referenceImagesDirectory stringByAppendingPathComponent:self.folderName];
@@ -308,9 +311,9 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
     NSString *fileName = [self _fileNameForSelector:selector
                                          identifier:identifier
                                        fileNameType:fileNameType];
-
     if (self.flattenSnapshotFilename) {
-        NSString *formattedFilename = [NSString stringWithFormat:@"%@_%@", self.folderName, fileName];
+        NSString *formattedFolderName = [self.folderName stringByReplacingOccurrencesOfString:@"." withString:@"_"];
+        NSString *formattedFilename = [NSString stringWithFormat:@"%@_%@", formattedFolderName, fileName];
         return [_imageDiffDirectory stringByAppendingPathComponent:formattedFilename];
     } else {
         NSString *filePath = [_imageDiffDirectory stringByAppendingPathComponent:self.folderName];
@@ -367,16 +370,18 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
         NSString *filePath = [self _referenceFilePathForSelector:selector identifier:identifier];
         NSData *pngData = UIImagePNGRepresentation(image);
         if (pngData != nil) {
-            NSError *creationError = nil;
-            BOOL didCreateDir = [_fileManager createDirectoryAtPath:[filePath stringByDeletingLastPathComponent]
-                                        withIntermediateDirectories:YES
-                                                         attributes:nil
-                                                              error:&creationError];
-            if (!didCreateDir) {
-                if (errorPtr != NULL) {
-                    *errorPtr = creationError;
+            if (!self.flattenSnapshotFilename) {
+                NSError *creationError = nil;
+                BOOL didCreateDir = [_fileManager createDirectoryAtPath:[filePath stringByDeletingLastPathComponent]
+                                            withIntermediateDirectories:YES
+                                                            attributes:nil
+                                                                error:&creationError];
+                if (!didCreateDir) {
+                    if (errorPtr != NULL) {
+                        *errorPtr = creationError;
+                    }
+                    return NO;
                 }
-                return NO;
             }
             didWrite = [pngData writeToFile:filePath options:NSDataWritingAtomic error:errorPtr];
             if (didWrite) {

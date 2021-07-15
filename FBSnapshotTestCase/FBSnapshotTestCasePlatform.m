@@ -21,11 +21,7 @@ BOOL FBSnapshotTestCaseIs64Bit(void)
 
 NSOrderedSet *FBSnapshotTestCaseDefaultSuffixes(void)
 {
-    if (FBSnapshotTestCaseIs64Bit()) {
-        return [NSOrderedSet orderedSetWithObject:@"_64"];
-    } else {
-        return [NSOrderedSet orderedSetWithObject:@"_32"];
-    }
+    return [NSOrderedSet orderedSetWithObject:@""];
 }
 
 NSString *FBFileNameIncludeNormalizedFileNameFromOption(NSString *fileName, FBSnapshotTestCaseFileNameIncludeOption option)
