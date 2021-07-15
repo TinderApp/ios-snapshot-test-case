@@ -103,7 +103,7 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
                     overallTolerance:(CGFloat)overallTolerance
                                error:(NSError **)errorPtr
 {
-    if (self.recordMode) {
+    if (YES) {
         return [self _recordSnapshotOfViewOrLayer:viewOrLayer selector:selector identifier:identifier error:errorPtr];
     } else {
         return [self _performPixelComparisonWithViewOrLayer:viewOrLayer selector:selector identifier:identifier perPixelTolerance:perPixelTolerance overallTolerance:overallTolerance error:errorPtr];
@@ -292,7 +292,8 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
                                          identifier:identifier
                                        fileNameType:FBTestSnapshotFileNameTypeReference];
     if (self.flattenSnapshotFilename) {
-        NSString *formattedFilename = [NSString stringWithFormat:@"%@_%@", self.folderName, fileName];
+        NSString *formattedFolderName = [self.folderName stringByReplacingOccurrencesOfString:@"." withString:@"_"];
+        NSString *formattedFilename = [NSString stringWithFormat:@"%@_%@", formattedFolderName, fileName];
         return [_referenceImagesDirectory stringByAppendingPathComponent:formattedFilename];
     } else {
         NSString *filePath = [_referenceImagesDirectory stringByAppendingPathComponent:self.folderName];
@@ -308,9 +309,9 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
     NSString *fileName = [self _fileNameForSelector:selector
                                          identifier:identifier
                                        fileNameType:fileNameType];
-
     if (self.flattenSnapshotFilename) {
-        NSString *formattedFilename = [NSString stringWithFormat:@"%@_%@", self.folderName, fileName];
+        NSString *formattedFolderName = [self.folderName stringByReplacingOccurrencesOfString:@"." withString:@"_"];
+        NSString *formattedFilename = [NSString stringWithFormat:@"%@_%@", formattedFolderName, fileName];
         return [_imageDiffDirectory stringByAppendingPathComponent:formattedFilename];
     } else {
         NSString *filePath = [_imageDiffDirectory stringByAppendingPathComponent:self.folderName];
@@ -370,8 +371,8 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
             NSError *creationError = nil;
             BOOL didCreateDir = [_fileManager createDirectoryAtPath:[filePath stringByDeletingLastPathComponent]
                                         withIntermediateDirectories:YES
-                                                         attributes:nil
-                                                              error:&creationError];
+                                                        attributes:nil
+                                                            error:&creationError];
             if (!didCreateDir) {
                 if (errorPtr != NULL) {
                     *errorPtr = creationError;
