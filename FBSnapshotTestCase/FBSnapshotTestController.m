@@ -103,7 +103,7 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
                     overallTolerance:(CGFloat)overallTolerance
                                error:(NSError **)errorPtr
 {
-    if (self.recordMode) {
+    if (YES) {
         return [self _recordSnapshotOfViewOrLayer:viewOrLayer selector:selector identifier:identifier error:errorPtr];
     } else {
         return [self _performPixelComparisonWithViewOrLayer:viewOrLayer selector:selector identifier:identifier perPixelTolerance:perPixelTolerance overallTolerance:overallTolerance error:errorPtr];

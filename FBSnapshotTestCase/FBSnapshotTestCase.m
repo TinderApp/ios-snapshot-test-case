@@ -128,7 +128,7 @@
     NSError *error = nil;
     NSMutableArray *errors = [NSMutableArray array];
 
-    if (self.recordMode) {
+    if (YES) {
         NSString *referenceImagesDirectory = [NSString stringWithFormat:@"%@%@", referenceImageDirectory, suffixes.firstObject];
         BOOL referenceImageSaved = [self _compareSnapshotOfViewOrLayer:viewOrLayer referenceImagesDirectory:referenceImagesDirectory imageDiffDirectory:imageDiffDirectory identifier:(identifier) perPixelTolerance:perPixelTolerance overallTolerance:overallTolerance error:&error];
         if (!referenceImageSaved) {
