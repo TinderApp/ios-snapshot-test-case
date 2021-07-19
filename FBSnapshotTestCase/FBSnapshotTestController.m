@@ -103,7 +103,7 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
                     overallTolerance:(CGFloat)overallTolerance
                                error:(NSError **)errorPtr
 {
-    if (YES) {
+    if (self.recordMode) {
         return [self _recordSnapshotOfViewOrLayer:viewOrLayer selector:selector identifier:identifier error:errorPtr];
     } else {
         return [self _performPixelComparisonWithViewOrLayer:viewOrLayer selector:selector identifier:identifier perPixelTolerance:perPixelTolerance overallTolerance:overallTolerance error:errorPtr];
@@ -292,8 +292,7 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
                                          identifier:identifier
                                        fileNameType:FBTestSnapshotFileNameTypeReference];
     if (self.flattenSnapshotFilename) {
-        NSString *formattedFolderName = [self.folderName stringByReplacingOccurrencesOfString:@"." withString:@"_"];
-        NSString *formattedFilename = [NSString stringWithFormat:@"%@_%@", formattedFolderName, fileName];
+        NSString *formattedFilename = [NSString stringWithFormat:@"%@_%@", self.folderName, fileName];
         return [_referenceImagesDirectory stringByAppendingPathComponent:formattedFilename];
     } else {
         NSString *filePath = [_referenceImagesDirectory stringByAppendingPathComponent:self.folderName];
@@ -310,8 +309,7 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
                                          identifier:identifier
                                        fileNameType:fileNameType];
     if (self.flattenSnapshotFilename) {
-        NSString *formattedFolderName = [self.folderName stringByReplacingOccurrencesOfString:@"." withString:@"_"];
-        NSString *formattedFilename = [NSString stringWithFormat:@"%@_%@", formattedFolderName, fileName];
+        NSString *formattedFilename = [NSString stringWithFormat:@"%@_%@", self.folderName, fileName];
         return [_imageDiffDirectory stringByAppendingPathComponent:formattedFilename];
     } else {
         NSString *filePath = [_imageDiffDirectory stringByAppendingPathComponent:self.folderName];
