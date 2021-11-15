@@ -331,6 +331,9 @@ typedef NS_ENUM(NSUInteger, FBTestSnapshotFileNameType) {
         UIImage *snapshot = [self _imageForViewOrLayer:viewOrLayer];
         BOOL imagesSame = [self compareReferenceImage:referenceImage toImage:snapshot perPixelTolerance:perPixelTolerance overallTolerance:overallTolerance error:errorPtr];
         if (!imagesSame) {
+            NSString *path = @"/tmp/failingPixelSnapshots.txt";
+            NSString *content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+            NSString *updatedContent = [NSString stringWithFormat:@"%@\n%@", content, NSStringFromSelector(selector)];
             NSError *saveError = nil;
             if ([self saveFailedReferenceImage:referenceImage testImage:snapshot selector:selector identifier:identifier error:&saveError] == NO) {
                 NSLog(@"Error saving test images: %@", saveError);

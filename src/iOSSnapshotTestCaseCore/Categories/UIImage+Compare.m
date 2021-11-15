@@ -162,6 +162,8 @@ typedef union {
                                    imagePixels:(FBComparePixel *)imagePixel
 {
     NSUInteger numDiffPixels = 0;
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSString *path = @"/tmp/failingPixelSnapshots.txt";
     for (NSUInteger n = 0; n < pixelCount; ++n) {
         // If this pixel is different, increment the pixel diff count and see
         // if we have hit our limit.
@@ -171,6 +173,9 @@ typedef union {
 
             CGFloat percent = (CGFloat)numDiffPixels / (CGFloat)pixelCount;
             if (percent > overallTolerance) {
+                NSString *content = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+                NSString *updatedContent = [NSString stringWithFormat:@"%@\n%@_%.2f%%", content, percent];
+                [str writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
                 return NO;
             }
         }
