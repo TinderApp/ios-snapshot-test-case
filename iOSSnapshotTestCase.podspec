@@ -1,6 +1,5 @@
 Pod::Spec.new do |s|
   s.name         = "iOSSnapshotTestCase"
-  s.module_name  = "FBSnapshotTestCase"
   s.version      = "6.2.0"
   s.summary      = "Snapshot view unit tests for iOS"
   s.description  = <<-DESC
