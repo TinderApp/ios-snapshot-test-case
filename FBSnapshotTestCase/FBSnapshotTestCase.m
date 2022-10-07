@@ -7,8 +7,8 @@
  *
  */
 
-#import <FBSnapshotTestCase/FBSnapshotTestCase.h>
-#import <FBSnapshotTestCase/FBSnapshotTestController.h>
+#import <iOSSnapshotTestCase/FBSnapshotTestCase.h>
+#import <iOSSnapshotTestCase/FBSnapshotTestController.h>
 
 @implementation FBSnapshotTestCase {
     FBSnapshotTestController *_snapshotController;

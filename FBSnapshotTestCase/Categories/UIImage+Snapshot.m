@@ -7,7 +7,7 @@
  *
  */
 
-#import <FBSnapshotTestCase/UIImage+Snapshot.h>
+#import <iOSSnapshotTestCase/UIImage+Snapshot.h>
 
 @implementation UIImage (Snapshot)
 

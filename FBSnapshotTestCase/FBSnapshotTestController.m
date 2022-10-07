@@ -7,11 +7,11 @@
  *
  */
 
-#import <FBSnapshotTestCase/FBSnapshotTestCasePlatform.h>
-#import <FBSnapshotTestCase/FBSnapshotTestController.h>
-#import <FBSnapshotTestCase/UIImage+Compare.h>
-#import <FBSnapshotTestCase/UIImage+Diff.h>
-#import <FBSnapshotTestCase/UIImage+Snapshot.h>
+#import <iOSSnapshotTestCase/FBSnapshotTestCasePlatform.h>
+#import <iOSSnapshotTestCase/FBSnapshotTestController.h>
+#import <iOSSnapshotTestCase/UIImage+Compare.h>
+#import <iOSSnapshotTestCase/UIImage+Diff.h>
+#import <iOSSnapshotTestCase/UIImage+Snapshot.h>
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
